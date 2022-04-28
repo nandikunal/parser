@@ -117,10 +117,7 @@ root@lnx:/home/user/task/build# gcovr --exclude=../main.cpp -r ../
 
 Parser is Single threaded process parsing UTF8 Text to output top used words and start position of smiley.
 #### Block Diagram
-```plantuml
-Bob -> Alice : hello
-Alice -> Bob : hi
-```
+![Block Diagram](https://www.plantuml.com/plantuml/png/SoWkIImgAStDuKfCAYufIamkKKZEIImkLb3mz2yjAIWjuO9m4S0vFwyuFoSL8kkPMv23eI8ajQ84ZtH4RWuUMOYK6z0X-KMLM8qEI2mgJYtYIiqhpLN0q1XIMP3A1NMwWasDhYwcUr6amIRYa8Eu55CAA8FgIeVKl1HW4080)
 
 ### Improvement Scope
 * create threads for every backend output operation
