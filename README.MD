@@ -1,11 +1,12 @@
 # Text Parser
 ## Table of Contents
 1. [Overview](#overview)
-2. [Additional information](#information)
-2. [Dependencies and Setup](#setup)
-3. [Build and Run instructions](#build-run)
-4. [Improvement scope](#scope)
-5. [References](#references)
+2. [Additional Information](#additional-information)
+3. [Dependencies and Setup](#dependencies-and-setup)
+4. [Build and Run](#build-and-run)
+5. [Implementaiton Details](#implementaiton-details)
+6. [Improvement Scope](#improvement-scope)
+7. [References](#references)
 
 ### Overview
 
@@ -30,7 +31,7 @@ Parser application analyses a text block provided as regular text file input cov
  * Each output contain all the above information (1 and 2).
  * Output format of information (1 and 2) is kept consistent for all the backends.
 
-### Additional information
+### Additional Information
 #### Input [Text Block]
 * Text Block input needs to be provided as path of regular text file in command like argument.
 * UTF8 encoded text
@@ -53,14 +54,14 @@ Parser application analyses a text block provided as regular text file input cov
     - Text file - output.txt
     - XML - output.xml
 * Output of all three backend is consistent as shown below
-    <smiely>,<smiley_start_index>
-    <smiely>,<smiley_start_index>
-    <smiely>,<smiley_start_index>
-    ...
-    <word>,<occurance_count>
-    <word>,<occurance_count>
-    <word>,<occurance_count>
-    ...
+    |<smiely>,<smiley_start_index>|
+    |<smiely>,<smiley_start_index>|
+    |<smiely>,<smiley_start_index>|
+    |...                          |
+    |<word>,<occurance_count>     |
+    |<word>,<occurance_count>     |
+    |<word>,<occurance_count>     |
+    |...                          |
 
 #### Supporting following checklist
 * Solution has to run on Linux.
@@ -76,9 +77,11 @@ Parser application analyses a text block provided as regular text file input cov
 One can setup by installing all these rquired components.
 * cmake 3.10 or above
 * git
+* boost
 * spdlog logger
 * gcc-8 or above
 * googletest
+* lcov
 * gcovr
 
 Another alternative is to Install Docker, and execute
@@ -87,7 +90,7 @@ user@lnx:~/task# sh rundocker.sh
 ```
 This will setup the environment to build and run Parser and Unit test.
 
-### Build and Run instructions
+### Build and Run
 * Build without Unit Test
 ```
 root@lnx:/home/user/task# cmake -Bbuild .
@@ -108,15 +111,22 @@ root@lnx:/home/user/task# cmake -Bbuild . -DUTEST=ON
 root@lnx:/home/user/task# cd build
 root@lnx:/home/user/task/build# make -j
 root@lnx:/home/user/task/build# ./test/UTest
-root@lnx:/home/user/task/build# ./test/UTest
+root@lnx:/home/user/task/build# gcovr --exclude=../main.cpp -r ../
+```
+### Implementaiton Details
+
+Parser is Single threaded process parsing UTF8 Text to output top used words and start position of smiley.
+#### Block Diagram
+```plantuml
+Bob -> Alice : hello
+Alice -> Bob : hi
 ```
 
-### Improvement scope
-- Factory Class – Output (Console, file, XML, possible to extend)
-- BaseClass for Output extend it to different types.
-- Utility file to define logging macro.
-- Create threads to write the output in different ways.
-- Case Sensitive
+### Improvement Scope
+* create threads for every backend output operation
+* custom cmake target commad to generate coverage report
+* separate class to process input file containing Text Block
+* implement CLI to take interective input from user.
 
 ### References
 * https://stackoverflow.com/

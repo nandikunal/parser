@@ -2,8 +2,6 @@
 #include <vector>
 #include <utility>
 #include <cstdint>
-#include <fstream>
-#include <iostream>
 #include <spdlog/spdlog.h>
 #include <boost/filesystem.hpp>
 #include "spdlog/spdlog.h"
