@@ -5,7 +5,7 @@ USER root
 RUN apt-get update -y && \
     apt-get upgrade -y && \
     apt-get install -y --no-install-recommends apt-utils && \
-    apt-get install build-essential software-properties-common wget libboost-all-dev gdb gcovr -y
+    apt-get install build-essential software-properties-common wget libboost-all-dev gdb lcov gcovr -y
 
 RUN add-apt-repository ppa:git-core/ppa && \
     add-apt-repository ppa:ubuntu-toolchain-r/test && \

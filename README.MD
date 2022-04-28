@@ -1,13 +1,15 @@
 # Text Parser
 ## Table of Contents
 1. [Overview](#overview)
+2. [Additional information](#information)
 2. [Dependencies and Setup](#setup)
-4. [Build and Run instructions](#build-run)
-5. [Improvement scope](#scope)
+3. [Build and Run instructions](#build-run)
+4. [Improvement scope](#scope)
+5. [References](#references)
 
 ### Overview
 
-Parser application analyses a text block provided as regular text file input to covering the following requirements:
+Parser application analyses a text block provided as regular text file input covering the following requirements:
 
 1. It computes the start position or index in the text of all the smileys. Smileys are defined as the character colon plus an optional dash character and a bracket. e.g: :-] or :(
 
@@ -16,107 +18,111 @@ Parser application analyses a text block provided as regular text file input to 
 3. It supports the following output formats:
     | Output Type      |  Value |
     |------------------|--------|
-    | * CONSOLE        |    0   |
-    | * TEXT           |    1   |
-    | * XML            |    2   |
-    | * CONSOLE_TEXT   |    3   |
-    | * CONSOLE_XML    |    4   |
-    | * TEXT_XML       |    5   |
-    | * ALL            |    6   |
-    |------------------|--------|
+    |   CONSOLE        |    0   |
+    |   TEXT           |    1   |
+    |   XML            |    2   |
+    |   CONSOLE_TEXT   |    3   |
+    |   CONSOLE_XML    |    4   |
+    |   TEXT_XML       |    5   |
+    |   ALL            |    6   |
 
  * All the possible combination of the backends can be specified through command line arguments (Console only, Text file only, Text file + XML file, Text file + XML + console, etc). 
  * Each output contain all the above information (1 and 2).
  * Output format of information (1 and 2) is kept consistent for all the backends.
- 
- Note: This last requirement is not skippable and it is expected that the solution provided is generic (e.g. allows for easy addition of future output formats).
+
+### Additional information
+#### Input [Text Block]
+* Text Block input needs to be provided as path of regular text file in command like argument.
+* UTF8 encoded text
+* Input text can have lines are separated by '\n'
+* Words in text blcok are separated by single or multiple consecutive whitespace characters.
+* Some edge cases that are considered:
+    - Whitespace can be '\t', multiple consecutive whitespace characters, etc
+    - The text can consist of a single line without '\n' at the end. The line count should be 1 in such a case.
+
+#### Opuput
+* Smileys considered for computation as cobination of :, -, ], ), [, (
+* Top used word with its occurance in logged in backends.
+* Words are considered case sensitive, eg. "Name" and "name" are considered two different words
+* Words with spacial characters like email address "hello.world@bmw.com" are considereded four words
+    - hello
+    - world
+    - bmw
+    - com
+* Every execuation of parser will generate new output files for Text file and XML
+    - Text file - output.txt
+    - XML - output.xml
+* Output of all three backend is consistent as shown below
+    <smiely>,<smiley_start_index>
+    <smiely>,<smiley_start_index>
+    <smiely>,<smiley_start_index>
+    ...
+    <word>,<occurance_count>
+    <word>,<occurance_count>
+    <word>,<occurance_count>
+    ...
+
+#### Supporting following checklist
+* Solution has to run on Linux.
+* Design with classes and clean APIs.
+* Good documentation.
+* Code quality to be comparable to production code.
+* Usage of C++11/14/17 features.
+* Usage of STL and Boost features would be preferable whenever applicable, or other known open source libraries.
+* Unit tests with high coverage > 90%.
+* CMake files which covers building and adding the tests.
 
 ### Dependencies and Setup
+One can setup by installing all these rquired components.
+* cmake 3.10 or above
+* git
+* spdlog logger
+* gcc-8 or above
+* googletest
+* gcovr
+
+Another alternative is to Install Docker, and execute
+```
+user@lnx:~/task# sh rundocker.sh
+```
+This will setup the environment to build and run Parser and Unit test.
 
 ### Build and Run instructions
-### Additional information
+* Build without Unit Test
+```
+root@lnx:/home/user/task# cmake -Bbuild .
+root@lnx:/home/user/task# cd build
+root@lnx:/home/user/task/build# make -j
+root@lnx:/home/user/task/build# ./parser <OutputType> <TextFilePath>
+```
+* Build with Unit Test
+```
+root@lnx:/home/user/task# cmake -Bbuild . -DUTEST=ON
+root@lnx:/home/user/task# cd build
+root@lnx:/home/user/task/build# make -j
+root@lnx:/home/user/task/build# ./test/UTest
+```
+* Generate coverage report
+```
+root@lnx:/home/user/task# cmake -Bbuild . -DUTEST=ON
+root@lnx:/home/user/task# cd build
+root@lnx:/home/user/task/build# make -j
+root@lnx:/home/user/task/build# ./test/UTest
+root@lnx:/home/user/task/build# ./test/UTest
+```
+
 ### Improvement scope
-### Scope
-Additional information:
-
-·       UTF8 encoding can be assumed
-
-·       Lines are separated by '\n'
-
-·       Words are separated by whitespace
-
-·       There are some edge cases that should be considered:
-
-·       Whitespace can be '\t', multiple consecutive whitespace characters, etc
-
-·       The text can consist of a single line without '\n' at the end. The line count should be 1 in such a case.
-
-Desired solution should have the following:
-
-·       Solution has to run on Linux.
-
-·       Design with classes and clean APIs.
-
-·       Good documentation.
-
-·       Code quality to be comparable to production code.
-
-·       Usage of C++11/14/17 features.
-
-·       Usage of STL and Boost features would be preferable whenever applicable, or other known open source libraries.
-
-·       Unit tests with high coverage > 90%.
-
-·       CMake files which covers building and adding the tests.
-
-
 - Factory Class – Output (Console, file, XML, possible to extend)
 - BaseClass for Output extend it to different types.
 - Utility file to define logging macro.
 - Create threads to write the output in different ways.
 - Case Sensitive
 
-### Dependency
-- CMake VERSION 3.22 or above
-- 
-git clone https://github.com/gabime/spdlog.git
-cd spdlog;cmake -Bbuild .;cd build;make -j install
-
-- Setting up Docker 
-apt update
-apt install build-essential
-apt install software-properties-common
-add-apt-repository ppa:git-core/ppa
-apt install git
-
-- Install GCC 9
-add-apt-repository ppa:ubuntu-toolchain-r/test
-apt install gcc-9 g++-9 -y
-
-ln -s /usr/bin/gcc-9 /usr/bin/gcc
-ln -s /usr/bin/g++-9 /usr/bin/g++
-
-- Install CMake 3.23
-apt install wget -y
-wget -v https://github.com/Kitware/CMake/releases/download/v3.23.1/cmake-3.23.1-linux-x86_64.sh
-chmod +x cmake-3.23.1-linux-x86_64.sh
-mkdir /opt/cmake
-
-./cmake-3.23.1-linux-x86_64.sh --prefix=/opt/cmake
-
-cp -r bin /usr/
-cp -r doc /usr/share/
-cp -r man /usr/share/
-cp -r share /usr/
-
-- Install boost & gdb
-apt install libboost-all-dev
-apt install gdb
-
-apt-get update
-apt-get upgrade
-
-https://github.com/google/googletest/blob/main/googletest/README.md
-
-apt install gcovr
-gcovr --exclude=../main.cpp -r ../
+### References
+* https://stackoverflow.com/
+* Regex - https://www.rexegg.com/regex-quickstart.html
+* spdlog - https://github.com/gabime/spdlog/wiki/1.-QuickStart
+* cpp - https://en.cppreference.com/
+* boost - https://www.boost.org/
+* GTest - https://github.com/google/googletest/tree/main/googletest
+* CMake - https://cmake.org/
