@@ -10,10 +10,10 @@ RUN apt-get update -y && \
 RUN add-apt-repository ppa:git-core/ppa && \
     add-apt-repository ppa:ubuntu-toolchain-r/test && \
     apt-get install git -y && \
-    apt-get install gcc-9 g++-9 -y && \
+    apt-get install gcc-8 g++-8 -y && \
     rm -f /usr/bin/gcc /usr/bin/g++ && \
-    ln -s /usr/bin/gcc-9 /usr/bin/gcc && \
-    ln -s /usr/bin/g++-9 /usr/bin/g++
+    ln -s /usr/bin/gcc-8 /usr/bin/gcc && \
+    ln -s /usr/bin/g++-8 /usr/bin/g++
 
 RUN wget -v https://github.com/Kitware/CMake/releases/download/v3.22.4/cmake-3.22.4-linux-x86_64.tar.gz && \
     gunzip cmake-3.22.4-linux-x86_64.tar.gz && \
@@ -29,5 +29,7 @@ RUN git clone https://github.com/gabime/spdlog.git && \
 
 RUN git clone https://github.com/google/googletest.git -b release-1.11.0 && \
     cd googletest;cmake -Bbuild .;cd build;make -j install
+
+RUN rm -r /usr/bin/gcov;ln -s /usr/bin/gcov-8 /usr/bin/gcov
 
 CMD bash

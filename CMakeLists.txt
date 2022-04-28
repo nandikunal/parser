@@ -3,12 +3,13 @@ cmake_minimum_required(VERSION 3.10)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0 -fprofile-arcs -ftest-coverage")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -O0 -fprofile-arcs -ftest-coverage")
-
 project(parser)
 
 option(UTEST "Set unit test Option" OFF)
+
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0 -fprofile-arcs -ftest-coverage -fprofile-abs-path")
+endif()
 
 find_package(spdlog REQUIRED)
 find_package(Boost COMPONENTS system filesystem)
@@ -25,11 +26,14 @@ add_executable(${CMAKE_PROJECT_NAME}
 set_target_properties(${CMAKE_PROJECT_NAME}
     PROPERTIES
         INCLUDE_DIRECTORIES "${INCLUDE_DIRS}"
-        LINK_LIBRARIES "${LIBS}" 
+        LINK_LIBRARIES "${LIBS}"
 )
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/src)
 
-if(UTEST)
-    add_subdirectory(${CMAKE_SOURCE_DIR}/test)
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    if(UTEST)
+        message(STATUS "Unit Test is ${UTEST}")
+        add_subdirectory(${CMAKE_SOURCE_DIR}/test)
+    endif()
 endif()
