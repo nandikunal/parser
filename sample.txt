@@ -1,0 +1,8 @@
+Hello,
+    This is a test file, which contains some smileys like :-) also like :] and like :-], :( etc. etc. etc.
+
+I have tried to make this applicaiton to parse this text file and out the smileys and thir respective index, which will be like :), 20, so the smiley :) is at index 20.
+
+Also, it will output the top 10 words used in this file.
+
+Hope you like it.
