@@ -27,4 +27,7 @@ RUN wget -v https://github.com/Kitware/CMake/releases/download/v3.22.4/cmake-3.2
 RUN git clone https://github.com/gabime/spdlog.git && \
     cd spdlog;cmake -Bbuild .;cd build;make -j install
 
+RUN git clone https://github.com/google/googletest.git -b release-1.11.0 && \
+    cd googletest;cmake -Bbuild .;cd build;make -j install
+
 CMD bash
