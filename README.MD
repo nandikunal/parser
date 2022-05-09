@@ -93,21 +93,21 @@ This will setup the environment to build and run Parser and Unit test.
 ### Build and Run
 * Build without Unit Test
 ```
-root@lnx:/home/user/task# cmake -Bbuild .
+root@lnx:/home/user/task# cmake -Bbuild . -DCMAKE_BUILD_TYPE=Release
 root@lnx:/home/user/task# cd build
 root@lnx:/home/user/task/build# make -j
 root@lnx:/home/user/task/build# ./parser <OutputType> <TextFilePath>
 ```
 * Build with Unit Test
 ```
-root@lnx:/home/user/task# cmake -Bbuild . -DUTEST=ON
+root@lnx:/home/user/task# cmake -Bbuild . -DCMAKE_BUILD_TYPE=Debug -DUTEST=ON
 root@lnx:/home/user/task# cd build
 root@lnx:/home/user/task/build# make -j
 root@lnx:/home/user/task/build# ./test/UTest
 ```
 * Generate coverage report
 ```
-root@lnx:/home/user/task# cmake -Bbuild . -DUTEST=ON
+root@lnx:/home/user/task# cmake -Bbuild . -DCMAKE_BUILD_TYPE=Debug -DUTEST=ON
 root@lnx:/home/user/task# cd build
 root@lnx:/home/user/task/build# make -j
 root@lnx:/home/user/task/build# ./test/UTest
