@@ -10,7 +10,7 @@
 
 namespace util
 {
-    void XmlOutputImpl::write(std::vector<std::pair<std::string, uint32_t>> data)
+    void XmlOutputImpl::write(const std::vector<std::pair<std::string, uint32_t>>& data)
     {
         namespace pt = boost::property_tree;
 

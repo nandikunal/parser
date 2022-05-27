@@ -21,7 +21,7 @@ namespace util
         }
     }
 
-    void ConsoleOutputImpl::write(std::vector<std::pair<std::string, uint32_t>> data)
+    void ConsoleOutputImpl::write(const std::vector<std::pair<std::string, uint32_t>>& data)
     {
         for(auto&& val : data)
         {

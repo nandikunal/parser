@@ -26,6 +26,6 @@ namespace util
         /*!
         * Interface to write output on console/text file/xml.
         */
-        virtual void write(std::vector<std::pair<std::string, uint32_t>> data) = 0;
+        virtual void write(const std::vector<std::pair<std::string, uint32_t>>& data) = 0;
     };
 } // namespace util

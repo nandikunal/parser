@@ -28,7 +28,7 @@ namespace util
         /*!
         * Parsed Text Block output will be logged on text file.
         */
-        void write(std::vector<std::pair<std::string, uint32_t>> data) override;
+        void write(const std::vector<std::pair<std::string, uint32_t>>& data) override;
     private:
         std::shared_ptr<spdlog::logger> mFileLogger;
     };

@@ -28,7 +28,7 @@ namespace util
         }
     }
 
-    void TextOutputImpl::write(std::vector<std::pair<std::string, uint32_t>> data)
+    void TextOutputImpl::write(const std::vector<std::pair<std::string, uint32_t>>& data)
     {
         for(auto&& val : data)
         {
